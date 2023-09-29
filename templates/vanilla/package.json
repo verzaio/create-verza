@@ -1,0 +1,13 @@
+{
+  "name": "vanilla",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@verza/sdk": "^2.0.51-dev.21"
+  }
+}
