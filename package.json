@@ -1,6 +1,6 @@
 {
   "name": "create-verza",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "type": "module",
   "license": "MIT",
   "author": "zo0r <z@zo0r.me>",
@@ -8,8 +8,7 @@
     "create-verza": "dist/index.js"
   },
   "scripts": {
-    "build": "rollup -c ./rollup.config.mjs",
-    "publish": "npm publish --access public --scope=@verza"
+    "build": "rollup -c ./rollup.config.mjs"
   },
   "files": [
     "dist/*",
@@ -32,9 +31,5 @@
     "minimist": "^1.2.8",
     "prompts": "^2.4.2",
     "rollup": "^3.29.4"
-  },
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
   }
 }

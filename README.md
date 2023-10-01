@@ -24,9 +24,9 @@ npm create verza@latest react my-project
 
 ## Templates
 
-| Template   | Description               |
-| ---------- | ------------------------- |
-| `js`       | JavaScript template       |
-| `ts`       | TypeScript template       |
-| `react`    | React JavaScript template |
-| `react-ts` | React TypeScript template |
+| Template     | Description               |
+| ------------ | ------------------------- |
+| `javascript` | JavaScript template       |
+| `typescript` | TypeScript template       |
+| `react`      | React JavaScript template |
+| `react-ts`   | React TypeScript template |
