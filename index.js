@@ -121,7 +121,7 @@ const init = async () => {
 
   // copy .gitignore
 
-  const gitignoreSrc = path.join(TEMPLATES_DIR, ".gitignore");
+  const gitignoreSrc = path.join(TEMPLATES_DIR, "gitignore.txt");
   const gitignoreDest = path.join(projectDir, ".gitignore");
 
   copy(gitignoreSrc, gitignoreDest);
