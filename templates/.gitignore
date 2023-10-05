@@ -3,6 +3,7 @@
 # providers
 /functions
 /api
+.vercel
 
 # dependencies
 /node_modules

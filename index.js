@@ -7,6 +7,8 @@ import minimist from "minimist";
 import prompts from "prompts";
 import { cyan, lightGray, lightGreen, lightRed, red } from "kolorist";
 
+const SDK_VERSION = "^2.0.51-dev.51";
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 let TEMPLATES_DIR = path.resolve(__dirname, "templates");
@@ -97,9 +99,6 @@ const init = async () => {
   //
 
   const projectDir = path.join(process.cwd(), projectName);
-  const templateDir = path.join(TEMPLATES_DIR, templateId);
-
-  //
 
   if (fs.existsSync(projectDir)) {
     console.log(
@@ -112,15 +111,47 @@ const init = async () => {
 
   //
 
+  const baseDir = path.join(TEMPLATES_DIR, "base");
+  const templateDir = path.join(TEMPLATES_DIR, templateId);
+
+  copyDir(baseDir, projectDir);
   copyDir(templateDir, projectDir);
 
   //
 
+  // copy .gitignore
+
+  const gitignoreSrc = path.join(TEMPLATES_DIR, ".gitignore");
+  const gitignoreDest = path.join(projectDir, ".gitignore");
+
+  copy(gitignoreSrc, gitignoreDest);
+
+  //
+
+  // update SDK version
+
+  const projectPackageJsonPath = path.join(projectDir, "package.json");
+  const projectPackageJson = JSON.parse(
+    fs.readFileSync(projectPackageJsonPath, "utf8")
+  );
+
+  projectPackageJson.dependencies["@verza/sdk"] = SDK_VERSION;
+
+  fs.writeFileSync(
+    projectPackageJsonPath,
+    JSON.stringify(projectPackageJson, null, 2)
+  );
+
+  //
+
+  const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent);
+  const pkgManager = pkgInfo?.name ?? "npm";
+
   // show finished message
   console.log(`\n${lightGreen("✔")} Project created. To get started:\n`);
   console.log(lightGray(`  cd ${projectName}`));
-  console.log(lightGray("  npm install"));
-  console.log(lightGray("  npm run dev"));
+  console.log(lightGray(`  ${pkgManager} install`));
+  console.log(lightGray(`  ${pkgManager} run dev`));
   console.log("\n");
 };
 
@@ -145,3 +176,16 @@ function copy(src, dest) {
 }
 
 init();
+
+// package manager detection
+// thanks to https://github.com/vitejs/vite/blob/main/packages/create-vite/src/index.ts
+
+function pkgFromUserAgent(userAgent) {
+  if (!userAgent) return undefined;
+  const pkgSpec = userAgent.split(" ")[0];
+  const pkgSpecArr = pkgSpec.split("/");
+  return {
+    name: pkgSpecArr[0],
+    version: pkgSpecArr[1],
+  };
+}
