@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build && vite build --m server"
+    "dev": "verza",
+    "build": "verza build"
   },
   "dependencies": {
     "react": "^18.2.0",
