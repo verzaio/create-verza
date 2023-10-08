@@ -7,7 +7,7 @@ import minimist from "minimist";
 import prompts from "prompts";
 import { cyan, lightGray, lightGreen, lightRed, red } from "kolorist";
 
-const SDK_VERSION = "^2.0.51-dev.59";
+const SDK_VERSION = "^2.0.52";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
