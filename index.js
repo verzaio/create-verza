@@ -108,6 +108,9 @@ const init = async () => {
     );
     return;
   }
+  //
+
+  const packageVersion = await getPackgeVersion();
 
   //
 
@@ -135,7 +138,7 @@ const init = async () => {
     fs.readFileSync(projectPackageJsonPath, "utf8")
   );
 
-  projectPackageJson.dependencies["@verza/sdk"] = await getPackgeVersion();
+  projectPackageJson.dependencies["@verza/sdk"] = packageVersion;
 
   fs.writeFileSync(
     projectPackageJsonPath,
