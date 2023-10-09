@@ -7,7 +7,7 @@ import minimist from "minimist";
 import prompts from "prompts";
 import { cyan, lightGray, lightGreen, lightRed, red } from "kolorist";
 
-const SDK_VERSION = "^2.0.52";
+const REGISTRY_URL = "https://registry.npmjs.org/@verza/sdk";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -135,7 +135,7 @@ const init = async () => {
     fs.readFileSync(projectPackageJsonPath, "utf8")
   );
 
-  projectPackageJson.dependencies["@verza/sdk"] = SDK_VERSION;
+  projectPackageJson.dependencies["@verza/sdk"] = await getPackgeVersion();
 
   fs.writeFileSync(
     projectPackageJsonPath,
@@ -188,4 +188,14 @@ function pkgFromUserAgent(userAgent) {
     name: pkgSpecArr[0],
     version: pkgSpecArr[1],
   };
+}
+
+async function getPackgeVersion() {
+  try {
+    const result = await (await fetch(REGISTRY_URL)).json();
+    return `^${result["dist-tags"].latest}`;
+  } catch (e) {
+    console.error("Error fetching Verza SDK version");
+    throw e;
+  }
 }
